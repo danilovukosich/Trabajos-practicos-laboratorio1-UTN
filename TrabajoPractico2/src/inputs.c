@@ -9,39 +9,92 @@
 #define INPUTS_C_
 #include "inputs.h"
 
-
-int Utn_GetString(char string[], char mensaje[], char mensajeError[], int size)
+int getString(char* cadena, int len)
 {
-	int retorno=0;
-	char cadena[size];
-	int x;
+	int retorno=-1;
+	char bufferString[4096];
 
-	if(string!=NULL && mensaje!=NULL && mensajeError!=NULL)
+	if(cadena != NULL && len > 0)
 	{
-
-		printf("%s", mensaje);
 		fflush(stdin);
-		gets(cadena);
-		x=strlen(cadena);
-		strcpy(string,cadena);
-
-		while(x>size)
+		if(fgets(bufferString,sizeof(bufferString),stdin) != NULL)
 		{
-
-			printf("%s", mensajeError);
-			fflush(stdin);
-			gets(cadena);
-			x=strlen(cadena);
-			strcpy(string,cadena);
+			if(bufferString[strnlen(bufferString,sizeof(bufferString))-1] == '\n')
+			{
+				bufferString[strnlen(bufferString,sizeof(bufferString))-1] = '\0';
+			}
+			if(strnlen(bufferString,sizeof(bufferString)) <= len)
+			{
+				strncpy(cadena,bufferString,len);
+				retorno=0;
+			}
 		}
-
-		retorno=1;
 	}
-
 	return retorno;
-
 }
 
+
+
+int EsNombre(char* cadena,int longitud)
+{
+	int i=0;
+	int retorno = 1;
+
+	if(cadena != NULL && longitud > 0)
+	{
+		for(i=0 ; cadena[i] != '\0' && i < longitud; i++)
+		{
+			if((cadena[i] < 'A' || cadena[i] > 'Z' ) && (cadena[i] < 'a' || cadena[i] > 'z' ) && (cadena[i] != ' '))
+			{
+				retorno = 0;
+
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+
+int GetNombre(char* pResultado, int longitud)
+{
+    int retorno=-1;
+    char buffer[4096];
+
+    if(pResultado != NULL)
+    {
+    	if(	getString(buffer,sizeof(buffer))==0 && EsNombre(buffer,sizeof(buffer)) && strnlen(buffer,sizeof(buffer))<longitud)
+    	{
+    		strncpy(pResultado,buffer,longitud);
+
+			retorno = 0;
+		}
+    }
+    return retorno;
+}
+
+
+
+
+int Utn_GetNombre(char* pResultado, int longitud,char* mensaje, char* mensajeError, int reintentos)
+{
+	char bufferString[4096];
+	int retorno = -1;
+	while(reintentos>=0)
+	{
+		reintentos--;
+		printf("%s",mensaje);
+
+		if(GetNombre(bufferString,sizeof(bufferString)) == 0 && strnlen(bufferString,sizeof(bufferString)) < longitud && bufferString[0] != '\0' && bufferString[0] != ' ')
+		{
+			strncpy(pResultado,bufferString,longitud);
+			retorno = 1;
+
+			break;
+		}
+		printf("%s",mensajeError);
+	}
+	return retorno;
+}
 
 int Utn_GetInt ( int* pResultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos)
 {

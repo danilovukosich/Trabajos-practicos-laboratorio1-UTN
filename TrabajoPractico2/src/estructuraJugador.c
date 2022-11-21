@@ -10,10 +10,7 @@
 
 #include "estructuraJugador.h"
 
-static int IdAutoIncremental(void)
-{
-	return idAutoIncremental++;
-}
+
 
 int InicializarJugadores(eJugador listaJugadores[],int size)
 {
@@ -47,28 +44,51 @@ int BuscarLibre(eJugador listaJugadores[],int size)
 	return indice;
 }
 
-int HardcodearJugadores(eJugador listaJugadors[], int size, int cantidad)
+int HardcodearJugadores(int* id, eJugador listaJugadors[], int size, int cantidad)
 {
 
     int retorno = 0;
-    //
-    eJugador auxJugador[] ={{1, "Danilo", "Delantero", 9, 100, 10000000,3, 0},
-							{2, "Nico", "Mediocampista", 10, 101, 11000444,3, 0},
-							{3, "Luca", "Arquero", 1, 103, 12000555, 5,  0},
-							{4, "Joaco", "Defensor", 8, 104, 13333444, 2, 0},
-							{5, "Juani", "Mediocampista", 11, 101, 14000888, 1, 0},
-							{6, "Juanma", "Delantero", 7, 105, 15555444, 5, 0},
-							{7, "Milena", "Mediocampista", 5, 102, 1622200, 2, 0},
-							{8, "Daniela", "Defensor", 4, 101, 1700000, 4,  0},
-							{9, "Bianca", "Delantero", 14, 105, 18000000, 3,  0},
-							{10, "Ailen", "Defensor", 3, 100, 19000000, 6, 0}};
 
-    if(listaJugadors != NULL && size > 0 && cantidad <= size && cantidad <= 10)
+    //
+//    eJugador auxJugador[] ={{1, "Danilo", "Delantero", 9, 100, 10000000,3, 0},
+//							{2, "Nico", "Mediocampista", 10, 101, 11000444,3, 0},
+//							{3, "Luca", "Arquero", 1, 103, 12000555, 5,  0},
+//							{4, "Joaco", "Defensor", 8, 104, 13333444, 2, 0},
+//							{5, "Juani", "Mediocampista", 11, 101, 14000888, 1, 0},
+//							{6, "Juanma", "Delantero", 7, 105, 15555444, 5, 0},
+//							{7, "Milena", "Mediocampista", 5, 102, 1622200, 2, 0},
+//							{8, "Daniela", "Defensor", 4, 101, 1700000, 4,  0},
+//							{9, "Bianca", "Delantero", 14, 105, 18000000, 3,  0},
+//							{10, "Ailen", "Defensor", 3, 100, 19000000, 6, 0}};
+
+
+    int OK = 0;
+     eJugador auxJugador[]={
+           {1,"Emiliano Martinez","Arquero",1,100,100000,4,OK},
+           {2,"Juan Musso","Arquero",12,100,80000,2,OK},
+           {3,"Leo Messi","Delantero",10,100,80000,4,OK},
+           {4,"Almirez Ali","Delantero",9,100,55000,1,OK},
+           {5,"Harry Maguire","Defensor",2,101,70000,4,OK},
+           {6,"Eric Dier","Defensor",3,101,60000,2,OK},
+           {7,"Harry Kane","Delantero",10,101,3000,2,OK},
+           {8,"Alfred Gomis","Arquero",1,101,9000,1,OK},
+           {9,"Abdelkarim Hassan","Mediocampista",8,101,48000,1,OK},
+           {10,"Guillermo Ochoa","Arquero",1,104,90000,4,OK},
+           {11,"Tecatito","Delantero",11,104,100000,3,OK},
+           {12,"Luis Romo","Mediocampista",7,104,100000,2,OK},
+           {13,"Bamba Dieng ","Delantero",9,103,100000,2,OK},
+           {14,"Demba Seck","Delantero",11,103,6000,2,OK},
+           {15,"Tarek Salman","Defensor",6,102,78000,5,OK}
+       };
+
+
+    if(listaJugadors != NULL && size > 0 && cantidad <= size && cantidad <= 15)
     {
 
         for(int i = 0 ; i < cantidad ; i++)
         {
         	listaJugadors[i] = auxJugador[i];
+        	*id = *id + 1;
         }
         retorno = 1;
     }
@@ -83,7 +103,7 @@ int CargarJugador(eJugador unJugador[], eConfederacion listaConfederaciones[], i
 
 	if(unJugador!=NULL && listaConfederaciones!=NULL && sizeConfederaciones>0)
 	{
-		Utn_GetString(nombreAux, "Ingrese Nombre del jugador: \n", "Ingrese un nombre VALIDO:\n", 50);
+		Utn_GetNombre(nombreAux, 50, "Ingrese Nombre del jugador: \n", "Ingrese un nombre VALIDO:\n", 50);
 		strcpy(unJugador->nombre, nombreAux);
 
 		Utn_GetInt(&posicionJugador, "---POSICIONES---\n1)Arquero.\n2)Defensor.\n3)Mediocampista.\n4)Delantero.\n>Ingrese una posicion: \n", " ERROR ingrese una posicion VALIDO! \n", 1, 4, 100);
@@ -111,7 +131,7 @@ int CargarJugador(eJugador unJugador[], eConfederacion listaConfederaciones[], i
 		fflush(stdin);
 		Utn_GetInt(&unJugador->idConfederacion, "\n>Ingrese ID de confederacion: \n",  "ERROR ingrese ID de confederacion VALIDO! \n", 100, 105, 100);
 
-		Utn_GetFloat(&unJugador->salario, ">Ingrese salario: \n", "ERROR Ingrese un salario VALIDO! \n", 100000, 1000000000, 1000);
+		Utn_GetFloat(&unJugador->salario, ">Ingrese salario: \n", "ERROR Ingrese un salario VALIDO! \n", 10000, 1000000000, 1000);
 
 		Utn_GetShortInt(&unJugador->aniosContrato, ">Ingrese anios de contrato: \n", "ERROR ingrese anios de contrato VALIDOS! \n", 1, 20, 100);
 
@@ -124,7 +144,7 @@ int CargarJugador(eJugador unJugador[], eConfederacion listaConfederaciones[], i
 	return retorno;
 }
 
-int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores, eConfederacion listaConfederaciones[], int sizeConfederaciones)
+int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores,int* idSiguiente, eConfederacion listaConfederaciones[], int sizeConfederaciones)
 {
 	int retorno=-1;
 	int indice;
@@ -142,7 +162,8 @@ int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores, eConfederac
 		else
 		{
 			CargarJugador(&auxJugador, listaConfederaciones, sizeConfederaciones);
-			auxJugador.id=IdAutoIncremental();
+			auxJugador.id= *idSiguiente;
+			(*idSiguiente)++;
 
 			listaJugador[indice]=auxJugador;
 
@@ -156,9 +177,10 @@ int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores, eConfederac
 void MostrarJugador(eJugador jugador, eConfederacion listaConfederaciones[],int sizeConfederaciones)
 {
 	char nombreConfederacion[50];
+	int jugadorIdConfederacion=jugador.idConfederacion;
 
-	CargarNombreConfederacion(listaConfederaciones, sizeConfederaciones, jugador.idConfederacion, &nombreConfederacion);
-	printf("  %4d  %25s        %15s         %hd           $%.2f   %10s           %hd \n",  jugador.id,
+	CargarNombreConfederacion(listaConfederaciones, sizeConfederaciones, jugadorIdConfederacion, nombreConfederacion);
+	printf("  %4d  %25s        %15s         %2hd          $%-15.2f %10s          %2hd \n",  jugador.id,
 																					   jugador.nombre,
 																					   jugador.posicion,
 																					   jugador.numeroCamiseta,
@@ -218,7 +240,7 @@ int BajaJugador(eJugador listaJugadores[], int sizeJugadores, eConfederacion lis
 		printf("============BAJA JUGADOR============\n");
 		MostrarListaJugadores(listaJugadores, sizeJugadores, listaConfederaciones, sizeConfederaciones);
 		fflush(stdin);
-		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000);
+		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000,100);
 
 
 		indice=VerificarId(listaJugadores, sizeJugadores, id);
@@ -229,7 +251,7 @@ int BajaJugador(eJugador listaJugadores[], int sizeJugadores, eConfederacion lis
 		}
 		else
 		{
-			Utn_GetInt(&respuesta, ">Confimar baja:\n1)SI\n2)NO\n", "ERROR\n>Confimar baja:\n1)SI\n2)NO\n", 1, 2);
+			Utn_GetInt(&respuesta, ">Confimar baja:\n1)SI\n2)NO\n", "ERROR\n>Confimar baja:\n1)SI\n2)NO\n", 1, 2,100);
 			if(respuesta==1)
 			{
 				listaJugadores[indice].isEmpty=1;
@@ -261,7 +283,7 @@ int ModificacionJugador(eJugador listaJugadores[], int sizeJugadores, eConfedera
 
 	{
 		MostrarListaJugadores(listaJugadores, sizeJugadores, listaConfederaciones, sizeConfederaciones);
-		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000);
+		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000,100);
 		indice=VerificarId(listaJugadores, sizeJugadores, id);
 
 		if(indice==-1)
@@ -279,7 +301,7 @@ int ModificacionJugador(eJugador listaJugadores[], int sizeJugadores, eConfedera
 				switch(respuesta)
 				{
 				case 1:
-					Utn_GetString(nombreAux, "Ingrese Nombre del jugador: \n", "Ingrese un nombre VALIDO:\n", 50);
+					Utn_GetNombre(nombreAux,50, "Ingrese Nombre del jugador: \n", "Ingrese un nombre VALIDO:\n", 50);
 					strcpy(listaJugadores[indice].nombre, nombreAux);
 					break;
 

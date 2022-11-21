@@ -14,9 +14,9 @@
 #include "string.h"
 #include "estructuraConfederacion.h"
 #include "menus.h"
+#include "inputs.h"
 
-//id autoincremental
-static unsigned int idAutoIncremental = 1;
+
 
 
 typedef struct
@@ -33,10 +33,7 @@ typedef struct
 }eJugador;
 
 
-/// @brief Funcion que genera un id de jugador autoincremental
-///
-/// @return Retorna el id incramentado.
-static int IdAutoIncremental(void);
+
 
 
 /// @brief Inicializa el isEmpty de la lista d ejugadores en 1.
@@ -67,7 +64,7 @@ int CargarJugador(eJugador unJugador[], eConfederacion listaConfederaciones[], i
 /// @param size tamanio de la lista a hardcodear.
 /// @param cantidad cantidad de jugadores hardcodeados.
 /// @return retorna 0 su hubo un error y 1 si no hubo error.
-int HardcodearJugadores(eJugador listaJugadors[], int size, int cantidad);
+int HardcodearJugadores(int* id, eJugador listaJugadors[], int size, int cantidad);
 
 /// @brief Funcion que carga una un jugador a la lista de jugadores.
 ///
@@ -76,7 +73,7 @@ int HardcodearJugadores(eJugador listaJugadors[], int size, int cantidad);
 /// @param listaConfederaciones lista de confederaciones para utilizar en la funcion en conjunto de cargarJugador
 /// @param sizeConfederaciones el tamanio de la lista de confederaciones
 /// @return retorna -1 su hubo un error y 1 si no hubo error.
-int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores, eConfederacion listaConfederaciones[], int sizeConfederaciones);
+int CargarListaJugadores(eJugador listaJugador[], int sizeJugadores,int* idSiguiente, eConfederacion listaConfederaciones[], int sizeConfederaciones);
 
 
 /// @brief Funcion que muestra un unico jugador.

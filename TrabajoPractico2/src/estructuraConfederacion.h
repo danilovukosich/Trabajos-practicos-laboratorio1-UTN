@@ -11,8 +11,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "inputs.h"
+#include "menus.h"
 
-static unsigned int idAutoIncrementalConfe = 1000;
+
 
 typedef struct
 {
@@ -29,7 +31,7 @@ typedef struct
 /// @param lista Confederaciones lista de confederaciones a hardcodear.
 /// @param size tamanio de la lista de confederaciones a hardcodear.
 /// @return retorna 0 si hubo un error y 1 si no hubo error.
-int HardcodearConfederaciones(eConfederacion listaConfederaciones[], int size);
+int HardcodearConfederaciones(int* idSiguiente, eConfederacion listaConfederaciones[], int size);
 
 /// @brief Funcion que muestra las confederaciones.
 ///
@@ -44,14 +46,11 @@ void MostrarConfederaciones(eConfederacion listaConfederaciones[], int sizeConfe
 /// @param idConfederacion id con el que se compara para la busqueda.
 /// @param nombreConfederacion puntero donde se guarda el valor del nombre de la confederacion.
 /// @return
-int CargarNombreConfederacion(eConfederacion listaCOnfederaciones[], int sizeConfederaciones, int idConfederacion, char nombreConfederacion[]);
+int CargarNombreConfederacion(eConfederacion listaConfederaciones[], int sizeConfederaciones, int idConfederacion, char nombreConfederacion[]);
 
 
 //ALTA, BAJA Y MODIFICACION DE CONFEDERACION
-/// @brief Funcion que genera un id de confederacion autoincremental
-///
-/// @return Retorna el id incramentado.
-static int IdAutoIncrementalConfederacion(void);
+
 
 
 /// @brief Funicon que inicializa la lista de confederacionnes en 1.
@@ -79,7 +78,7 @@ int CargarConfederacion(eConfederacion Confederacion[]);
 /// @param listaConfederaciones lista de confedraciones en la que se cargara una confedracion.
 /// @param sizeConfederaciones tamanio de confederaciones.
 /// @return retorna -1 si hubo un erro y 1 si no hubo error.
-int CargarListaConfederaciones(eConfederacion listaConfederaciones[], int sizeConfederaciones);
+int CargarListaConfederaciones(eConfederacion listaConfederaciones[], int sizeConfederaciones, int*idConfederacion);
 
 /// @brief Funcion que muestra una confederacion.
 ///

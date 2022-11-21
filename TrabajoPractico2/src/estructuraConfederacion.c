@@ -9,7 +9,7 @@
 #define ESTRUCTURACONFEDERACION_C_
 #include "estructuraConfederacion.h"
 
-int HardcodearConfederaciones(eConfederacion listaConfederaciones[], int size)
+int HardcodearConfederaciones(int* idSiguiente, eConfederacion listaConfederaciones[], int size)
 {
 
     int retorno = 0;
@@ -27,6 +27,7 @@ int HardcodearConfederaciones(eConfederacion listaConfederaciones[], int size)
         for(int i = 0 ; i < size ; i++)
         {
         	listaConfederaciones[i] = auxConfederacion[i];
+        	*idSiguiente=*idSiguiente + 1;
         }
         retorno = 1;
     }
@@ -52,16 +53,16 @@ void MostrarConfederaciones(eConfederacion listaConfederaciones[], int sizeConfe
 
 }
 
-int CargarNombreConfederacion(eConfederacion listaCOnfederaciones[], int sizeConfederaciones, int idConfederacion, char nombreConfederacion[])
+int CargarNombreConfederacion(eConfederacion listaConfederaciones[], int sizeConfederaciones, int idConfederacion, char nombreConfederacion[])
 {
 	int retorno=-1;
-	if(listaCOnfederaciones!=NULL && sizeConfederaciones>0 && nombreConfederacion!=NULL)
+	if(listaConfederaciones!=NULL && sizeConfederaciones>0 && nombreConfederacion!=NULL)
 	{
 		for(int i=0;i<sizeConfederaciones;i++)
 		{
-			if(listaCOnfederaciones[i].id==idConfederacion)
+			if(listaConfederaciones[i].id==idConfederacion)
 			{
-				strcpy(nombreConfederacion,listaCOnfederaciones[i].nombre);
+				strcpy(nombreConfederacion,listaConfederaciones[i].nombre);
 				break;
 
 			}
@@ -108,14 +109,14 @@ int CargarConfederacion(eConfederacion Confederacion[])
 	int retorno=-1;
 	char nombreAux[50];
 	char regionAux[50];
-	int aux;
+
 
 	if(Confederacion!=NULL)
 	{
-		Utn_GetString(nombreAux, "Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
+		Utn_GetNombre(nombreAux, 50,"Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
 		strcpy(Confederacion->nombre, nombreAux);
 
-		Utn_GetString(nombreAux, "Ingrese Region: \n", "Ingrese una Region VALIDA:\n", 50);
+		Utn_GetNombre(nombreAux, 50, "Ingrese Region: \n", "Ingrese una Region VALIDA:\n", 50);
 		strcpy(Confederacion->region, regionAux);
 
 		Utn_GetInt(&Confederacion->anioCreacion, "\n>Ingrese anio de creacion: \n",  "ERROR ingrese anio de creacion VALIDO! \n", 1700, 2022, 100);
@@ -129,12 +130,9 @@ int CargarConfederacion(eConfederacion Confederacion[])
 	return retorno;
 }
 
-static int IdAutoIncrementalConfederacion(void)
-{
-	return idAutoIncrementalConfe++;
-}
 
-int CargarListaConfederaciones(eConfederacion listaConfederaciones[], int sizeConfederaciones)
+
+int CargarListaConfederaciones(eConfederacion listaConfederaciones[], int sizeConfederaciones, int* idConfederacion)
 {
 	int retorno=-1;
 	int indice;
@@ -152,7 +150,8 @@ int CargarListaConfederaciones(eConfederacion listaConfederaciones[], int sizeCo
 		else
 		{
 			CargarConfederacion(&auxConfederacion);
-			auxConfederacion.id=IdAutoIncrementalConfederacion();
+			auxConfederacion.id= *idConfederacion;
+			(*idConfederacion)++;
 
 			listaConfederaciones[indice]=auxConfederacion;
 
@@ -223,7 +222,7 @@ int BajaConfederacion(eConfederacion listaConfederaciones[], int sizeConfederaci
 		printf("============BAJA CONFEDERACION============\n");
 		MostrarLitaConfederaciones(listaConfederaciones, sizeConfederaciones);
 		fflush(stdin);
-		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000);
+		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000, 15);
 
 
 		indice=VerificarIdConfederacion(listaConfederaciones, sizeConfederaciones, id);
@@ -234,7 +233,7 @@ int BajaConfederacion(eConfederacion listaConfederaciones[], int sizeConfederaci
 		}
 		else
 		{
-			Utn_GetInt(&respuesta, ">Confimar baja:\n1)SI\n2)NO\n", "ERROR\n>Confimar baja:\n1)SI\n2)NO\n", 1, 2);
+			Utn_GetInt(&respuesta, ">Confimar baja:\n1)SI\n2)NO\n", "ERROR\n>Confimar baja:\n1)SI\n2)NO\n", 1, 2, 15);
 			if(respuesta==1)
 			{
 				listaConfederaciones[indice].isEmpty=1;
@@ -267,7 +266,7 @@ int ModificacionConfederacion(eConfederacion listaConfederaciones[], int sizeCon
 
 	{
 		MostrarLitaConfederaciones(listaConfederaciones, sizeConfederaciones);
-		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000);
+		Utn_GetInt(&id, "Ingrese un ID: \n",  "Ingrese un ID valido: \n", 1, 3000, 15);
 		indice=VerificarIdConfederacion(listaConfederaciones, sizeConfederaciones, id);
 
 		if(indice==-1)
@@ -285,12 +284,12 @@ int ModificacionConfederacion(eConfederacion listaConfederaciones[], int sizeCon
 				switch(respuesta)
 				{
 				case 1:
-					Utn_GetString(nombreAux, "Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
+					Utn_GetNombre(nombreAux, 50, "Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
 					strcpy(listaConfederaciones[indice].nombre, nombreAux);
 					break;
 
 				case 2:
-					Utn_GetString(regionAux, "Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
+					Utn_GetNombre(regionAux, 50, "Ingrese Nombre de Confederacion: \n", "Ingrese un nombre VALIDO:\n", 50);
 					strcpy(listaConfederaciones[indice].region, regionAux);
 					break;
 
