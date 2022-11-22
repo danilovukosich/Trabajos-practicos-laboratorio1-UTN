@@ -86,10 +86,35 @@ float GetFloat ( float * pResultado);
 /// @return  retorna -1 si hubo un error y 1 si no hubo error.
 float EsNumericaFloat ( char * cadena);
 
-
+/// @brief Funcion que lee de stdin hasta que encuentra un '\n' o hasta que haya copiado en cadena un maximo de 'longitud - 1' caracteres.
+///
+/// @param cadena
+/// @param len
+/// @return
 int getString(char* cadena, int len);
+
+/// @brief Funcion que verifica si la cadena ingresada es un nombre valido
+///
+/// @param cadena
+/// @param longitud
+/// @return 1 (verdadero) si la cadena es valida y 0 (falso) si no lo es
 int EsNombre(char* cadena,int longitud);
+
+/// @brief funcion que btiene un string valido como nombre
+///
+/// @param pResultado
+/// @param longitud
+/// @return 0 (EXITO) si se obtiene un numero flotante y -1 (ERROR) si no
 int GetNombre(char* pResultado, int longitud);
+
+/// @brief funcion que olicita un nombre al usuario, luego de verificarlo devuelve el resultado
+///
+/// @param pResultado
+/// @param longitud
+/// @param mensaje es el mensaje que se mostrara al pedir el  nombre.
+/// @param mensajeError es el mensaje que se mostrara al ingresar un nombre q no es valido.
+/// @param reintentos
+/// @return 0 si se obtuvo el numero flotante y -1 si no
 int Utn_GetNombre(char* pResultado, int longitud,char* mensaje, char* mensajeError, int reintentos);
 
 #endif /* INPUTS_H_ */
