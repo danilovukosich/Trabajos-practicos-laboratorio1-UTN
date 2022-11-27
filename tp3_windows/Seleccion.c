@@ -164,7 +164,7 @@ int selec_MostrarSeleccion(Seleccion* seleccionAux)
 		selec_getConvocados(seleccionAux, &convocadosAux);
 
 
-		printf("%d %15s %15s %d\n",idAux, paisAux, confederacionAux, convocadosAux);
+		printf("  %2d    %20s     %10s                %3d\n",idAux, paisAux, confederacionAux, convocadosAux);
 		retorno=1;
 	}
 
@@ -188,7 +188,7 @@ int selec_MostrarPaisDeNacionalidad(Seleccion* seleccionAux)
 
 
 
-		printf("%d %15s\n",idAux, paisAux);
+		printf("   %d      %15s\n",idAux, paisAux);
 		retorno=1;
 	}
 
@@ -202,6 +202,7 @@ int BuscarIdSeleccion(LinkedList* listaSeleccion, int id)
 {
 	int indice=-1;
 	int size;
+	int idSeleccion;
 
 	Seleccion* seleccionAux=NULL;
 
@@ -212,8 +213,9 @@ int BuscarIdSeleccion(LinkedList* listaSeleccion, int id)
 		for(int i=0; i<size; i++)
 		{
 			seleccionAux=ll_get(listaSeleccion,i);
+			selec_getId(seleccionAux, &idSeleccion);
 
-			if(seleccionAux->id == id)
+			if(idSeleccion == id)
 			{
 				indice=ll_indexOf(listaSeleccion, seleccionAux);//retorna el indice del jugador con el id que le paso
 			}
@@ -227,6 +229,65 @@ int BuscarIdSeleccion(LinkedList* listaSeleccion, int id)
 
 	return indice;
 }
+
+//pido la confedracion
+int GetConfederacionSeleccionada(int confederacionInt, char* confederacion)
+{
+	int retorno=-1;
+
+	if(confederacion!=NULL)
+	{
+		switch(confederacionInt)
+		{
+		case 1:
+			strcpy(confederacion,"AFC");
+			break;
+
+		case 2:
+			strcpy(confederacion,"CAF");
+			break;
+
+		case 3:
+			strcpy(confederacion,"CONCACAF");
+			break;
+
+		case 4:
+			strcpy(confederacion,"CONMEBOL");
+			break;
+
+		case 5:
+			strcpy(confederacion,"UEFA");
+			break;
+		}
+	}
+
+	return retorno;
+}
+
+
+int OrdenarSeleccionConfederacion(void* pSeleccion1, void* pSeleccion2)
+{
+	int retorno;
+	char confederacionSeleccion1[50];
+	char confederacionSeleccion2[50];
+
+	Seleccion* seleccionAux1=NULL;
+	Seleccion* seleccionAux2=NULL;
+
+	if(pSeleccion1!=NULL && pSeleccion2!=NULL)
+	{
+		seleccionAux1= (Seleccion*)pSeleccion1;
+		seleccionAux2= (Seleccion*)pSeleccion2;
+
+		selec_getConfederacion(seleccionAux1, confederacionSeleccion1);
+		selec_getConfederacion(seleccionAux2, confederacionSeleccion2);
+		retorno=strcmp(confederacionSeleccion1,confederacionSeleccion2);
+	}
+
+
+	return retorno;
+}
+
 
 
 

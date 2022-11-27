@@ -315,5 +315,23 @@ int Utn_GetNombre(char* pResultado, int longitud,char* mensaje, char* mensajeErr
 	return retorno;
 }
 
+int AscendenteDescendente(void)
+{
+	int opcion=0;
+
+	Utn_GetInt(&opcion, "\nElija el orden:\n1)Ascendente.\n2)Descendente.\n>Ingrese una opcion:", "Ingrese una opcion VALIDA!", 1, 2, 15);
+
+	switch(opcion)
+	{
+	case 1:
+		opcion= 1;
+		break;
+	case 2:
+		opcion= 0;
+		break;
+	}
+
+	return opcion;
+}
 
 #endif /* INPUTS_C_ */

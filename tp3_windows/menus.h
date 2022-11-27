@@ -23,12 +23,24 @@ void MenuListados(void);
 ///
 void ElegirPosicion(void);
 
+/// @brief Funcion que printea el menu de modificacion de un jugador.
+///
 void MenuModificacionJugador(void);
 
+/// @brief Funcion que printea el menu para convocar y
+/// eliminar de una seleccion a un jugador.
+///
+///
 void MenuConvocados(void);
 
+/// @brief Funcion que printea el menu para seleccionar
+/// que ordenamientos realizar y mostrar
+///
 void MenuOrdenamientos(void);
 
+
+/// @brief Funcion que printea una lista de las confederaciones
+/// para elgir entre ellas.
 void ElegirConfederacion(void);
 
 #endif /* MENUS_H_ */

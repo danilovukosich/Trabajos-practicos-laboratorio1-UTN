@@ -43,6 +43,13 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 
 		return retorno;
 }
+
+
+/// @brief Se encarga de escribir los datos de la lista de jugadores en jugadores.csv (modo texto).
+///
+/// @param pFile
+/// @param pArrayListJugador
+/// @return int
 int parser_JugadorSaveAsText(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -114,7 +121,11 @@ int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
     return retorno;
 }
 
-
+/// @brief Se encarga de escribir los datos de la lista de jugadores en jugadores.csv (modo binario).
+///
+/// @param pFile
+/// @param pArrayListJugador
+/// @return int
 int parser_JugadorSaveAsBinary(FILE* pFile , LinkedList* pArrayListJugador)
 {
 	int retorno=-1;
@@ -179,6 +190,11 @@ int parser_SeleccionFromText(FILE* pFile , LinkedList* pArrayListSeleccion)
 	return retorno;
 }
 
+/// @brief Se encarga de escribir los datos de la lista de selecciones en selecciones.csv (modo texto).
+///
+/// @param pFile
+/// @param pArrayListSeleccion
+/// @return int
 int parser_SeleccionSaveAsText(FILE* pFile , LinkedList* pArrayListSeleccion)
 {
 	int retorno=-1;

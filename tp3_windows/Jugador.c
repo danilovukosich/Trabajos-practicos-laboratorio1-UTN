@@ -200,6 +200,7 @@ int jug_MostrarJugador(Jugador* jugadorAux)
 	char posicionAux[50];
 	char nacionalidadAux[50];
 	int idSelecAux;
+	char seleccionString[20];
 
 	if(jugadorAux!=NULL)
 	{
@@ -209,8 +210,9 @@ int jug_MostrarJugador(Jugador* jugadorAux)
 		jug_getPosicion(jugadorAux, posicionAux);
 		jug_getNacionalidad(jugadorAux, nacionalidadAux);
 		jug_getSIdSeleccion(jugadorAux, &idSelecAux);
+		JugadorSelecion(idSelecAux, seleccionString);
 
-		printf("%d %25s %d %15s %15s %d\n",idAux, nombreCompletoAux, edadAux, posicionAux,nacionalidadAux,idSelecAux);
+		printf("    %3d %25s      %2d   %20s   %15s       %s\n",idAux, nombreCompletoAux, edadAux, posicionAux,nacionalidadAux,seleccionString);
 
 		retorno=1;
 	}
@@ -246,15 +248,15 @@ int AddNuevoJugador(LinkedList* this, LinkedList* listaSelecciones)
 	Jugador* jugadorAux = NULL;
 
 	//nombre
-	retornoNombre=Utn_GetNombre(nombreCompletoAux, 100, ">Ingrese el nombre del Jugador:\n", ">Ingrese un nombre VALIDO:\n", 15);
+	retornoNombre=Utn_GetNombre(nombreCompletoAux, 100, ">Ingrese el nombre del Jugador:\n", "Ingrese un nombre VALIDO!\n", 15);
 	//edad
-	retornoEdad=Utn_GetInt(&edadAuxInt, ">Ingrese edad:\n", ">Ingrese edad VALIDA:\n", 17, 45, 15);
+	retornoEdad=Utn_GetInt(&edadAuxInt, ">Ingrese edad:\n", "Ingrese edad VALIDA!\n", 17, 45, 15);
 	//posicion
 	ElegirPosicion();//muestra las posiciones a elegir.
-	retornoPosicion=Utn_GetInt(&PosicionAuxInt, ">Ingrese posicion: \n", ">Ingrese posicion VALIDA: \n", 1, 11, 15);
+	retornoPosicion=Utn_GetInt(&PosicionAuxInt, ">Ingrese posicion: \n", "Ingrese posicion VALIDA!\n", 1, 11, 15);
 	//nacionalidad
 	controller_listarNacionalidades(listaSelecciones);//muestra los paises a elegir
-	retornoNacionalidad=Utn_GetInt(&NacionalidadAuxInt, "Ingrese ID del pais de nacionalidad:\n", "Ingrese ID de nacionalidad VALIDO:\n", 1, 30, 15);
+	retornoNacionalidad=Utn_GetInt(&NacionalidadAuxInt, "Ingrese ID del pais de nacionalidad:\n", "Ingrese ID de nacionalidad VALIDO!\n", 1, 30, 15);
 	//id seleccion
 	idSeleccionAuxInt = 0;
 
@@ -465,6 +467,151 @@ int JugadorPosicion(int idPosicion, char* posicion)
 	return retorno;
 }
 
+int JugadorSelecion(int idSeleccion, char* seleccionJugador)
+{
+	int retorno=-1;
+
+	if(seleccionJugador!=NULL)
+	{
+		switch(idSeleccion)
+		{
+		case 0:
+			strcpy(seleccionJugador,"No convocado");
+			break;
+		case 1:
+			strcpy(seleccionJugador,"Alemania");
+			break;
+
+		case 2:
+			strcpy(seleccionJugador,"Arabia Saudita");
+			break;
+
+		case 3:
+			strcpy(seleccionJugador,"Argentina")    ;
+			break;
+
+		case 4:
+			strcpy(seleccionJugador,"Australia")    ;
+			break;
+
+		case 5:
+			strcpy(seleccionJugador,"Belgica");
+			break;
+
+		case 6:
+			strcpy(seleccionJugador,"Brasil");
+			break;
+
+		case 7:
+			strcpy(seleccionJugador,"Camerun");
+			break;
+
+		case 8:
+			strcpy(seleccionJugador,"Canada");
+			break;
+
+		case 9:
+			strcpy(seleccionJugador,"Corea del Sur");
+			break;
+
+		case 10:
+			strcpy(seleccionJugador,"Costa Rica");
+			break;
+
+		case 11:
+			strcpy(seleccionJugador,"Croacia");
+			break;
+
+		case 12:
+			strcpy(seleccionJugador,"Dinamarca");
+			break;
+
+		case 13:
+			strcpy(seleccionJugador,"Ecuador");
+			break;
+
+		case 14:
+			strcpy(seleccionJugador,"Espana");
+			break;
+
+		case 15:
+			strcpy(seleccionJugador,"Estados Unidos");
+			break;
+
+		case 16:
+			strcpy(seleccionJugador,"Francia");
+			break;
+
+		case 17:
+			strcpy(seleccionJugador,"Gales");
+			break;
+
+		case 18:
+			strcpy(seleccionJugador,"Ghana");
+			break;
+
+		case 19:
+			strcpy(seleccionJugador,"Holanda");
+			break;
+		case 20:
+			strcpy(seleccionJugador,"Inglaterra");
+			break;
+
+		case 21:
+			strcpy(seleccionJugador,"Iran");
+			break;
+
+		case 22:
+			strcpy(seleccionJugador,"Japon");
+			break;
+
+		case 23:
+			strcpy(seleccionJugador,"Marruecos");
+			break;
+
+		case 24:
+			strcpy(seleccionJugador,"Mexico");
+			break;
+
+		case 25:
+			strcpy(seleccionJugador,"Polonia");
+			break;
+
+		case 26:
+			strcpy(seleccionJugador,"Portugal");
+			break;
+
+		case 27:
+			strcpy(seleccionJugador,"Qatar");
+			break;
+
+		case 28:
+			strcpy(seleccionJugador,"Senegal");
+			break;
+
+		case 29:
+			strcpy(seleccionJugador,"Serbia");
+			break;
+
+		case 30:
+			strcpy(seleccionJugador,"Suiza");
+			break;
+
+		case 31:
+			strcpy(seleccionJugador,"Tunez");
+			break;
+
+		case 32:
+			strcpy(seleccionJugador,"Uruguay");
+			break;
+		}
+
+		retorno=1;
+	}
+
+	return retorno;
+}
+
 int BuscarIdJugador(LinkedList* this, int id)
 {
 	int indice=-1;
@@ -514,25 +661,25 @@ int ModificarJugador(Jugador* jugador, LinkedList* listaSelecciones)
 		do
 		{
 			MenuModificacionJugador();
-			Utn_GetInt(&opcion, ">Ingrese una opcion: \n", ">Ingrese una opcion VALIDA: \n", 1, 7, 15);
+			Utn_GetInt(&opcion, ">Ingrese una opcion: \n", "Ingrese una opcion VALIDA!\n", 1, 7, 15);
 
 			switch(opcion)
 			{
 			case 1:
-				Utn_GetNombre(nombreCompletoAux, 100, ">Ingrese nombre: \n", ">Ingrese nombre valido: \n", 15);
+				Utn_GetNombre(nombreCompletoAux, 100, ">Ingrese nombre: \n", "Ingrese nombre valido!\n", 15);
 				jug_setNombreCompleto(jugador, nombreCompletoAux);
 				printf("Se modifico el NOMBRE del jugador!\n");
 				break;
 
 			case 2:
-				Utn_GetInt(&edadAux, ">Ingrese una edad: \n", ">Ingrese una edad valida: \n", 17, 45, 15);
+				Utn_GetInt(&edadAux, ">Ingrese una edad: \n", "Ingrese una edad valida!\n", 17, 45, 15);
 				jug_setEdad(jugador, edadAux);
 				printf("Se modifico la EDAD del jugador!\n");
 				break;
 
 			case 3:
 				ElegirPosicion();
-				Utn_GetInt(&posicionInt, ">Ingrese posicion: \n", ">Ingrese posicion valida: \n", 1, 7, 15);
+				Utn_GetInt(&posicionInt, ">Ingrese posicion: \n", "Ingrese posicion valida!\n", 1, 11, 15);
 				JugadorPosicion(posicionInt, posicionAux);
 				jug_setPosicion(jugador, posicionAux);
 				printf("Se modifico la POSICION del jugador!\n");
@@ -540,7 +687,7 @@ int ModificarJugador(Jugador* jugador, LinkedList* listaSelecciones)
 
 			case 4:
 				controller_listarNacionalidades(listaSelecciones);
-				Utn_GetInt(&nacionalidadAuxInt, "Ingrese ID del pais de nacionalidad:\n", "Ingrese ID de nacionalidad VALIDO:\n", 1, 30, 15);
+				Utn_GetInt(&nacionalidadAuxInt, "Ingrese ID del pais de nacionalidad:\n", "Ingrese ID de nacionalidad VALIDA!\n", 1, 30, 15);
 				JugadorNacionalidad(nacionalidadAuxInt, nacionalidadAux);
 				jug_setNacionalidad(jugador, nacionalidadAux);
 				printf("Se modifico la NACIONALIDAD del jugador!\n");
@@ -564,11 +711,24 @@ int ModificarJugador(Jugador* jugador, LinkedList* listaSelecciones)
 int ConvocarJugador(Jugador* jugadorAux, Seleccion* seleccionAux)
 {
 	int retorno=-1;
+	int idSeleccion;
+	int cantConvocados;
 
+
+	//usar getters y setters
 	if(jugadorAux!=NULL && seleccionAux!=NULL)
 	{
-		jugadorAux->idSeleccion=seleccionAux->id;
-		seleccionAux->convocados++;
+		selec_getConvocados(seleccionAux, &cantConvocados);
+		if(cantConvocados<22)//50 tope de cada seleccion
+		{
+			selec_getId(seleccionAux, &idSeleccion);
+			jug_setIdSeleccion(jugadorAux, idSeleccion);
+			//jugadorAux->idSeleccion=seleccionAux->id;
+			cantConvocados++;
+			selec_setConvocados(seleccionAux, cantConvocados);
+			//seleccionAux->convocados++;
+		}
+
 		retorno=1;
 	}
 
@@ -580,11 +740,23 @@ int ConvocarJugador(Jugador* jugadorAux, Seleccion* seleccionAux)
 int QuitarJugadorDeSeleccion(Jugador* jugadorAux, Seleccion* seleccionAux)
 {
 	int retorno=-1;
+	int cantConvocados;
+	int idSeleccionJugador;
 
 	if(jugadorAux!=NULL && seleccionAux!=NULL)
 	{
-		jugadorAux->idSeleccion=0;
-		seleccionAux->convocados--;
+		selec_getConvocados(seleccionAux, &cantConvocados);
+
+		if(cantConvocados>0)
+		{
+			idSeleccionJugador=0;
+			jug_setIdSeleccion(jugadorAux, idSeleccionJugador);
+			//jugadorAux->idSeleccion=0;
+			cantConvocados--;
+			selec_setConvocados(seleccionAux, cantConvocados);
+			//seleccionAux->convocados--;
+
+		}
 
 		retorno=1;
 	}
@@ -613,7 +785,7 @@ int jug_MostrarJugadorConvocado(Jugador* jugadorAux)
 		jug_getNacionalidad(jugadorAux, nacionalidadAux);
 		jug_getSIdSeleccion(jugadorAux, &idSelecAux);
 
-		printf("%d %25s %d %15s %15s %d\n",idAux, nombreCompletoAux, edadAux, posicionAux,nacionalidadAux,idSelecAux);
+		printf("  %3d  %20s          %2d %20s %20s       %2d\n",idAux, nombreCompletoAux, edadAux, posicionAux,nacionalidadAux,idSelecAux);
 
 		retorno=1;
 	}
@@ -647,28 +819,6 @@ int OrdenarJugadorNacionalidad(void* pJugador1, void* pJugador2)
 	return retorno;
 }
 
-int OrdenarSeleccionConfederacion(void* pSeleccion1, void* pSeleccion2)
-{
-	int retorno;
-	char confederacionSeleccion1[50];
-	char confederacionSeleccion2[50];
-
-	Seleccion* seleccionAux1=NULL;
-	Seleccion* seleccionAux2=NULL;
-
-	if(pSeleccion1!=NULL && pSeleccion2!=NULL)
-	{
-		seleccionAux1= (Seleccion*)pSeleccion1;
-		seleccionAux2= (Seleccion*)pSeleccion2;
-
-		selec_getConfederacion(seleccionAux1, confederacionSeleccion1);
-		selec_getConfederacion(seleccionAux2, confederacionSeleccion2);
-		retorno=strcmp(confederacionSeleccion1,confederacionSeleccion2);
-	}
-
-
-	return retorno;
-}
 
 int OrdenarJugadorEdad(void* pJugador1, void* pJugador2)
 {
@@ -728,21 +878,7 @@ int OrdenarJugadorNombre(void* pJugador1, void* pJugador2)
 	return retorno;
 }
 
-//int JugadorDeDeterminadaConfederacion(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
-//{
-//	int retorno=-1;
-//	int confederacion;
-//
-//	Jugador* jugadorAux=NULL;
-//
-//	ElegirConfederacion();
-//	Utn_GetInt(&confederacion, ">Ingrese una confederacion: \n", "Ingrese una confederacion Valida!\n", 1, 5, 15);
-//
-//
-//
-//
-//	return retorno;
-//}
+
 //int jug_setIsEmpty(Jugador* this,int isEmpty);
 //int jug_getIsEmpty(Jugador* this,int* isEmpty);
 

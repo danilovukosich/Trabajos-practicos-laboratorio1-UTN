@@ -10,11 +10,13 @@
 #include "Jugador.h"
 #include "menus.h"
 #include "inputs.h"
+#include "Seleccion.h"
 
 
 int main()
 {
 	setbuf(stdout,NULL);
+
     int option = 0;
     int opcionListados=0;
     int returnController;
@@ -22,16 +24,18 @@ int main()
     int opcionConvocar=0;
     int opcionOrdenaListas=0;
     int banderaGuardado=0;
-    int banderaConvocados=0;
+    int banderaConvocados=1;
+    int opcionConfederacion=0;
+    char confederacionElegida[50];
+    int banderaAltaJugadoresConfederacion=0;
 
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSelecciones = ll_newLinkedList();
+    LinkedList* listaJugadoresCofederacion = ll_newLinkedList();//lista para confederaciones.
 
 
 
-
-
-    puts("funciona ok");
+    //puts("funciona ok");
 
     do{
     	MenuPrincipal();
@@ -86,7 +90,7 @@ int main()
             case 4://BAJA
             	if(banderaCargaListas==1)
             	{
-            		returnController=controller_removerJugador(listaJugadores);
+            		returnController=controller_removerJugador(listaJugadores, listaSelecciones);
 					if(returnController==1)
 					{
 						printf("Se elimino Correctamente!\n");
@@ -167,15 +171,23 @@ int main()
 							}
 							break;
 						case 2:
-							returnController=controller_removerDeSeleccion(listaJugadores, listaSelecciones);
-							if(returnController==1)
+							if(banderaConvocados==1)
 							{
-								printf("Se elimino Correctamente de la seleccion!\n");
+								returnController=controller_removerDeSeleccion(listaJugadores, listaSelecciones);
+								if(returnController==1)
+								{
+									printf("Se elimino Correctamente de la seleccion!\n");
+								}
+								else
+								{
+									printf("ERROR al eliminar de la seleccion!\n");
+								}
 							}
 							else
 							{
-								printf("ERROR al eliminar de la seleccion!\n");
+								printf("Convocar al menos un jugador antes!\n");
 							}
+
 							break;
 						case 3:
 							printf("Volvio al menu principal...\n");
@@ -226,11 +238,48 @@ int main()
 				break;
 
             case 8:
+            	//igualo la lista al filtro que me la devuelve y la cargo en el controller
+            	if(banderaCargaListas==1)
+            	{
+            		if(banderaConvocados==1)
+            		{
+            			ElegirConfederacion();
+						Utn_GetInt(&opcionConfederacion, ">Ingrese la confederacion: ", "ERROR canfedracion invalida!\n", 1, 5, 15);
+						GetConfederacionSeleccionada(opcionConfederacion, confederacionElegida);
 
+						returnController=controller_ListaPorConfederacion(listaJugadoresCofederacion, listaJugadores, listaSelecciones, confederacionElegida);
+						if(returnController==1)
+						{
+							controller_guardarJugadoresModoBinario("listaJugadoresConvocados.bn", listaJugadoresCofederacion);
+							banderaAltaJugadoresConfederacion=1;
+						}
+						else
+						{
+							printf("No se encontro jugador convocado en esa confederacion\n");
+						}
+            		}
+            		else
+            		{
+            			printf("\nCONVOCAR AL MENOS UN JUGADOR ANTES!(Opcion 1)\n");
+            		}
+
+            	}
+            	else
+				{
+					printf("\nREALIZAR LA CARGA ANTES!(Opcion 1)\n");
+				}
 				break;
 
             case 9://CARGAR ARCHIVO BINARIO DLE PUNTO 8
-
+            	if(banderaAltaJugadoresConfederacion==1)
+            	{
+            		controller_cargarJugadoresDesdeBinario("listaJugadoresConvocados.bn", listaJugadoresCofederacion);
+            		controller_listarJugadores(listaJugadoresCofederacion);
+            	}
+            	else
+            	{
+            		printf("\nREALIZAR LA CARGA ANTES!(Opcion 8)\n");
+            	}
 				break;
 
             case 10://GUARDAR ARCHIVO .CSV con todos los camibios de jugadoes y selecciones
@@ -260,41 +309,39 @@ int main()
 				{
 					printf("\nREALIZAR LA CARGA ANTES!(Opcion 1)\n");
 				}
-
             	break;
 
             case 11:
-            	if(banderaCargaListas==1)
-            	{
-            		if(banderaGuardado!=1)//BANDERA PARA PREGUNTAR SI DESEA SALIR SIN GUARDAR
-					{
-						int i=0;
-
-							printf("Seguro que desea salir sin guardar?");
-							Utn_GetInt(&i, "\n1)Si\n2)No\n>Ingrese una opcion:", "\nIngrese una opcion valida!", 1, 2, 15);
-							switch(i)
-							{
-							case 1:
-								printf("\n\nSALIO DEL PROGRAMA...\n");
-								option=12;
-								break;
-							case 2:
-								printf("Volvio al menu principal...\n");
-								break;
-							}
-
-					}
-					else
-					{
-						printf("\n\nSALIO DEL PROGRAMA...\n");
-						option=12;
-					}
-            	}
-            	else
+				if(banderaGuardado!=1)//BANDERA PARA PREGUNTAR SI DESEA SALIR SIN GUARDAR
 				{
-					printf("\nREALIZAR LA CARGA ANTES!(Opcion 1)\n");
-				}
+					int i=0;
 
+						printf("Seguro que desea salir sin guardar?");
+						Utn_GetInt(&i, "\n1)Si\n2)No\n>Ingrese una opcion:", "\nIngrese una opcion valida!", 1, 2, 15);
+						switch(i)
+						{
+						case 1:
+							printf("\n\nSALIO DEL PROGRAMA...\n");
+							//elimnino las listas creadas
+							controller_LiberarLista(listaJugadores);
+							controller_LiberarLista(listaSelecciones);
+							controller_LiberarLista(listaJugadoresCofederacion);
+							option=12;
+							break;
+						case 2:
+							printf("Volvio al menu principal...\n");
+							break;
+						}
+
+				}
+				else
+				{
+					printf("\n\nSALIO DEL PROGRAMA...\n");
+					controller_LiberarLista(listaJugadores);
+					controller_LiberarLista(listaSelecciones);
+					controller_LiberarLista(listaJugadoresCofederacion);
+					option=12;
+				}
             	break;
         }//fin del switch
 
