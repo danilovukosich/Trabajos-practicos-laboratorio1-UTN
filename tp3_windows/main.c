@@ -43,7 +43,7 @@ int main()
 
         switch(option)
         {
-            case 1://CARGA EN MEMORIA validar los controllers con if´s
+            case 1:
             	controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores);
             	controller_cargarSeleccionesDesdeTexto("selecciones.csv", listaSelecciones);
             	banderaCargaListas=1;//se cargaron los datos
