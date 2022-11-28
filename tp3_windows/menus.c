@@ -13,6 +13,7 @@ void MenuPrincipal(void)
 {
 	printf("|====================================|\n");
 	printf("|-----------MENU PRINCIPAL-----------|\n");
+	printf("|====================================|\n");
 	printf("|1)Carga de jugador.                 |\n"
 		   "|2)ALTA jugador.                     |\n"
 		   "|3)MODIFICACION jugador.             |\n"

@@ -101,14 +101,21 @@ int parser_JugadorSaveAsText(FILE* pFile , LinkedList* pArrayListJugador)
 int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 {
     int retorno=-1;
-
+    int cantidad;
     Jugador* jugadorAux;
 
     if(pFile!=NULL && pArrayListJugador!=NULL)
     {
+
     	do
     	{
     		jugadorAux=jug_new();
+    		cantidad=fread(jugadorAux,sizeof(Jugador),1,pFile);
+    		//solucionpara que nome printee un jugador de mas.
+    		if(cantidad<1)
+    		{
+    			break;
+    		}
 
     		if(jugadorAux!=NULL && fread(jugadorAux,sizeof(Jugador),1,pFile)==1)
     		{
